@@ -8,12 +8,16 @@ import NotFoundView from "./views/not-found/not-found-view.jsx";
 import SubRouteView from "./views/post/sub-route.jsx";
 import PostsListHomeView from "./views/post/posts-home-view.jsx";
 import MainLayout from "./layouts/main-layout.jsx";
+import ProductsView from "./views/products/products-view.jsx";
+import BasketView from "./views/basket/basket-view.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route index element={<HomeView />} />
+        <Route path="/products" element={<ProductsView />} />
+        <Route path="/basket" element={<BasketView />} />
         {/* posts */}
         <Route path="/posts" element={<PostListView />}>
           <Route index element={<PostsListHomeView />} />
