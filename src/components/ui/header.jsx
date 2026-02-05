@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router";
 import useBasket from "../../store/basket-store";
 
 function Header() {
-  const { basketItems } = useBasket();
+  const { itemsCount } = useBasket();
 
   return (
     <header className="flex justify-between px-3 py-4 bg-gray-200">
@@ -38,7 +38,7 @@ function Header() {
         </li>
       </ul>
 
-      <Link to={"/basket"}>basket {basketItems.length}</Link>
+      <Link to={"/basket"}>basket {itemsCount}</Link>
     </header>
   );
 }
