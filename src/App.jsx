@@ -1,93 +1,43 @@
-// import Count from "./components/count";
-// import PasswordInput from "./components/password-input";
-// import UserList from "./components/userlist";
-
-// import AccordionWrapper from "./components/ui/Accordion";
-// import AccordionItem from "./components/ui/accordion-item";
-// function App() {
-//   const accordionItems = [
-//     { q: "what is react ?", answer: "react is js library..." },
-//     { q: "what is react ?", answer: "react is js library..." },
-//   ];
-//   // function handleClick(event) {
-//   //   console.log("button clicked", event);
-//   // }
-
-//   // function handleChange() {
-//   //   console.log("change");
-//   // }
-
-//   return (
-//     <>
-//       {/* <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-//         <Card
-//           title={"title of card 1"}
-//           content={
-//             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus quis impedit nulla quasi voluptatum, quo, ipsam ducimus porro obcaecati commodi eius."
-//           }
-//         />
-//         <Card
-//           title={"title of card 2"}
-//           content={
-//             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus quis impedit nulla quasi voluptatum, quo, ipsam ducimus porro obcaecati commodi eius."
-//           }
-//         />
-//         <Card
-//           title={"title of card 3"}
-//           content={
-//             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus quis impedit nulla quasi voluptatum, quo, ipsam ducimus porro obcaecati commodi eius."
-//           }
-//         />
-//         <Card
-//           title={"title of card 4"}
-//           content={
-//             "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus quis impedit nulla quasi voluptatum, quo, ipsam ducimus porro obcaecati commodi eius."
-//           }AccordionWrapper
-//         />
-//       </div>
-//       <Button whenClicked={handleClick} variant="error" label="cancel" />
-//       <Button variant="primary">
-//         <span>click me</span>
-//       </Button>
-//       <Button label="add item" />
-
-//       <Input placeholder="enter your name" onChange={handleChange} /> */}
-
-//       {/* <LearnLoop /> */}
-
-//       {/* <MyComponent username={"alireza"} age={31} /> */}
-//       {/* <ShowInputValue /> */}
-//       {/* <PasswordInput /> */}
-//       {/* <UserList /> */}
-//       {/* <Count /> */}
-
-//       <AccordionWrapper items={accordionItems} />
-//       {/* <AccordionItem title={"1- what is React ?"}>
-//           react is js library....
-//         </AccordionItem>
-//         <AccordionItem title={"2- what is React ?"}>
-//           react is js library....
-//         </AccordionItem>
-//       </AccordionWrapper> */}
-//     </>
-//   );
-// }
-// export default App;
-
-// // title => h2
-// // content => paragraph
-
-import React, { useState } from "react";
-import Posts from "./components/posts";
-import WindowResize from "./components/window-resize";
-
+import { BrowserRouter, Route, Routes } from "react-router";
+import HomeView from "./views/home/home-view.jsx";
+import PostListView from "./views/post/post-list-view.jsx";
+import NotFoundView from "./views/not-found/not-found-view.jsx";
+import SubRouteView from "./views/post/sub-route.jsx";
+import PostsListHomeView from "./views/post/posts-home-view.jsx";
+import MainLayout from "./layouts/main-layout.jsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 const App = () => {
-  const [showResize, setShowResize] = useState(true);
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        staleTime: 5000,
+        gcTime: 10000,
+      },
+    },
+  });
+
   return (
-    <div>
-      <button onClick={() => setShowResize(!showResize)}>show resize</button>
-      {showResize && <WindowResize />}
-    </div>
+    <>
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomeView />} />
+              {/* posts */}
+              <Route path="/posts" element={<PostListView />}>
+                <Route index element={<PostsListHomeView />} />
+                <Route path="/posts/:id" element={<SubRouteView />} />
+              </Route>
+
+              {/* notfound */}
+              <Route path="*" element={<NotFoundView />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </>
   );
 };
 

@@ -1,26 +1,29 @@
-import { useContext, useEffect, useState } from "react";
+// import { useContext, useEffect, useState } from "react";
 import { Link, NavLink, Outlet } from "react-router";
 import AuthContext from "../../context/auth-context";
+import useGetPostList from "../../queries/post.query";
 
 const PostListView = () => {
-  const [postsData, setPostsData] = useState([]);
-  const { auth, logout, user, login } = useContext(AuthContext);
+  // const [postsData, setPostsData] = useState([]);
+  // const { auth, logout, user, login } = useContext(AuthContext);
 
-  function fetchData() {
-    fetch("https://jsonplaceholder.typicode.com/posts/")
-      .then((response) => response.json())
-      .then((json) => setPostsData(json));
-  }
+  // function fetchData() {
+  //   fetch("https://jsonplaceholder.typicode.com/posts/")
+  //     .then((response) => response.json())
+  //     .then((json) => setPostsData(json));
+  // }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
+  const { data } = useGetPostList();
 
   return (
     <div className="grid grid-cols-12">
       <aside className="col-end-3">
         <ul className=" flex flex-col gap-3">
-          {postsData.map((post) => {
+          {data?.map((post) => {
             return (
               <li key={post.id}>
                 <NavLink
@@ -42,17 +45,6 @@ const PostListView = () => {
       </aside>
       <main className="col-start-3 col-end-12">
         <Outlet />
-        <div>
-          {auth ? (
-            <>
-              <p>{user.userName}</p>
-              <br />
-              <button onClick={logout}>Logout</button>
-            </>
-          ) : (
-            <button onClick={login}>login</button>
-          )}
-        </div>
       </main>
     </div>
   );
