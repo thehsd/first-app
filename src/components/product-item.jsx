@@ -3,11 +3,9 @@ import useBasket from "../store/basket-store";
 
 const ProductItem = ({ data }) => {
   const { title, price, image } = data;
-  const { actions } = useBasket();
+  const { actions, basketItems } = useBasket();
 
-  // function add() {
-  //   actions.addToBasket(data);
-  // }
+  const findItem = basketItems.find((item) => item.id === data.id);
 
   function remove() {
     actions.removeFromBasket(data);
@@ -27,9 +25,9 @@ const ProductItem = ({ data }) => {
         >
           add to basket
         </button>
-        {data?.quantity && (
+        {findItem?.quantity > 0 && (
           <>
-            {data.quantity}
+            {findItem.quantity}
             <button
               onClick={remove}
               className="p-2 rounded-md bg-red-600 text-white cursor-pointer self-start "

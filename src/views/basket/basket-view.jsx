@@ -3,7 +3,6 @@ import ProductItem from "../../components/product-item";
 
 const BasketView = () => {
   const { actions, basketItems } = useBasket();
-  console.log("  ~ basketItems : ", basketItems);
 
   return (
     <div>
