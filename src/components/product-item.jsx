@@ -3,12 +3,12 @@ import useBasket from "../store/basket-store";
 
 const ProductItem = ({ data }) => {
   const { title, price, image } = data;
-  const { actions, basketItems } = useBasket();
+  const { basketItems, removeFromBasket, addToBasket } = useBasket();
 
   const findItem = basketItems.find((item) => item.id === data.id);
 
   function remove() {
-    actions.removeFromBasket(data);
+    removeFromBasket(data);
   }
 
   return (
@@ -20,7 +20,7 @@ const ProductItem = ({ data }) => {
       </div>
       <div className="flex items-center gap-2">
         <button
-          onClick={() => actions.addToBasket(data)}
+          onClick={() => addToBasket(data)}
           className="p-2 rounded-md bg-green-600 text-white cursor-pointer self-start "
         >
           add to basket

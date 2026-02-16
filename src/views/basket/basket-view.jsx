@@ -2,12 +2,12 @@ import useBasket from "../../store/basket-store";
 import ProductItem from "../../components/product-item";
 
 const BasketView = () => {
-  const { actions, basketItems } = useBasket();
+  const { removeAll, basketItems } = useBasket();
 
   return (
     <div>
       <button
-        onClick={actions.removeAll}
+        onClick={removeAll}
         className="bg-orange-400 p-3 rounded-md text-white cursor-pointer"
       >
         Remove All Item
