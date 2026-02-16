@@ -13,6 +13,8 @@ const App = () => {
       queries: {
         staleTime: 5000,
         gcTime: 10000,
+        retry: 3,
+        retryDelay: 500,
       },
     },
   });

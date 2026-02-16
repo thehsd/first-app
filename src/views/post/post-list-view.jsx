@@ -17,7 +17,8 @@ const PostListView = () => {
   //   fetchData();
   // }, []);
 
-  const { data } = useGetPostList();
+  const { data, error } = useGetPostList();
+  console.log("  ~ isError : ", error);
 
   return (
     <div className="grid grid-cols-12">

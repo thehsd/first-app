@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const useGetPostList = () => {
   const fetcher = async () => {
-    const data = await fetch("https://jsonplaceholder.typicode.com/posts/");
+    const data = await fetch("https://jsonplaceholder.typicode.comm/posts/");
     const response = await data.json();
     return response;
   };
@@ -11,6 +11,7 @@ const useGetPostList = () => {
     queryKey: ["post-list"],
     queryFn: fetcher,
     ...{ refetchOnWindowFocus: false },
+    retry: 2,
   });
 };
 

@@ -1,53 +1,52 @@
-// import { useState } from "react";
-// import CountDown from "../../components/count-down";
-
-// const HomeView = () => {
-//   const [number, setNumber] = useState(1);
-//   function handleClick() {
-//     setTimeout(() => {
-//       setNumber((perv) => perv + 1);
-//       console.log("  ~ number : ", number);
-//     }, 1000);
-//   }
-//   return (
-//     <div>
-//       <CountDown time={10} />
-//       <button className="bg-sky-500 cursor-pointer p-2" onClick={handleClick}>
-//         click here
-//       </button>
-//       <br />
-//       number: {number}
-//     </div>
-//   );
-// };
-
-// export default HomeView;
-
 import React from "react";
-import LevelOne from "../../components/levels/level-one";
-import ThemeContext from "../../context/theme-context";
-import { useCount } from "../../store/count-store";
+import Input from "../../components/ui/input";
+import { useForm } from "react-hook-form";
+import useCreateUserMutation from "../../queries/user.query";
 
 const HomeView = () => {
-  const { count, increase, decrease } = useCount();
-  const [theme, setTheme] = React.useState("light");
+  const { mutate, isPending } = useCreateUserMutation();
 
-  function incFn() {
-    increase(5);
-  }
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      id: 0,
+      username: "",
+      email: "",
+      password: "",
+    },
+  });
+  const onSubmitForm = (data) => {
+    mutate(data);
+  };
 
   return (
     <div>
-      <ThemeContext.Provider value={{ theme, setTheme }}>
-        {/* theme is {theme} */}
-        {/* <LevelOne /> */}
-
-        <p>current count: {count}</p>
-        <button onClick={incFn}>increase</button>
+      <form onSubmit={handleSubmit(onSubmitForm)}>
+        <br /> <br />
+        {/* id */}
+        <Input {...register("id")} type="number" placeholder={"enter id"} />
+        <br /> <br />
+        {/* username */}
+        <Input
+          {...register("username")}
+          type="text"
+          placeholder={"enter username"}
+        />
+        <br /> <br />
+        {/* email */}
+        <Input {...register("email")} type="text" placeholder={"enter email"} />
+        <br /> <br />
+        {/* password */}
+        <Input
+          {...register("password")}
+          type="password"
+          placeholder={"enter password"}
+        />
         <br />
         <br />
-        <button onClick={decrease}>decrease</button>
-      </ThemeContext.Provider>
+        <button className="bg-green-400 rounded-md border-none p-3 cursor-pointer">
+          {isPending ? "submitting" : "submit"}
+        </button>
+      </form>
     </div>
   );
 };

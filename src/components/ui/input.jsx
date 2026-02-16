@@ -1,10 +1,10 @@
-const Input = (props) => {
+const Input = ({ type, placeholder, ...props }) => {
   return (
     <input
-      type="text"
-      onChange={props.onChange}
-      placeholder={props.placeholder}
+      type={type}
+      placeholder={placeholder}
       className="p-1 border border-gray-300 rounded-sm"
+      {...props}
     />
   );
 };
